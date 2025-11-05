@@ -24,8 +24,9 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
 
     <?php require 'formulario.php'; ?>
-    <?php if ($exibir_tabela) : ?>
-        <?php require 'tabela.php' ?>
+
+    <?php if ($showTable) : ?>
+        <?php require 'tabela.php'; ?>
     <?php endif; ?>
     <br>
 

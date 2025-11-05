@@ -33,6 +33,13 @@ function getTasks($conn)
     return $tarefas;
 }
 
+function    getTask($conexao,    $id)
+{
+    $sqlBusca    =    'SELECT	*	FROM	tarefas	WHERE	id	=	'    .    $id;
+    $resultado    =    mysqli_query($conexao,    $sqlBusca);
+    return    mysqli_fetch_assoc($resultado);
+}
+
 function setTask($conn, $task)
 {
 
@@ -52,4 +59,34 @@ INSERT INTO `tarefas`( `nome`, `descricao`,`prioridade`, `prazo`, concluida)
     {$task['concluida']}
     )";
     mysqli_query($conn, $sqlSet);
+}
+
+function    editTask($conexao,    $tarefa)
+{
+    if ($tarefa['prazo']    ==    '') {
+        $prazo    =    'NULL';
+    } else {
+        $prazo    =    "'{$tarefa['prazo']}'";
+    }
+    $sqlEditar    =    "
+UPDATE	tarefas	SET
+nome	=	'{$tarefa['nome']}',
+descricao	=	'{$tarefa['descricao']}',
+prioridade	=	{$tarefa['prioridade']},
+prazo	=	{$prazo},
+concluida	=	{$tarefa['concluida']}
+WHERE	id	=	{$tarefa['id']}
+";
+    mysqli_query($conexao,    $sqlEditar);
+}
+
+function    delTask($conexao,    $id)
+{
+    $sqlRemover    =    "DELETE	FROM	tarefas	WHERE	id	=	{$id}";
+    mysqli_query($conexao,    $sqlRemover);
+}
+
+function delTudo($conn){
+    $sqlDel = 'DELETE FROM tarefas WHERE 1';
+    mysqli_query($conn, $sqlDel);
 }
