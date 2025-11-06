@@ -13,7 +13,7 @@
         <tr>
 
             <td id="tabela-item">
-                <a href="tarefa.php?id=<?php echo $tarefa['id']; ?>">
+                <a href="task.php?id=<?php echo $tarefa['id']; ?>">
                     <?php echo $tarefa['nome']    ?>
             </td>
             </a>

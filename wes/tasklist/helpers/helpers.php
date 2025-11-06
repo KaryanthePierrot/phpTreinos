@@ -82,3 +82,18 @@ function    validar_data($data)
     $ano    =    $dados[2];
     return    checkdate($mes,    $dia,    $ano);
 }
+
+// anexos
+
+function tratarAnexo($anexo){
+    $padrao = '/^.+(\.pdf|\.zip)$/';
+
+    $resultado = preg_match($padrao, $anexo['name']);
+
+    if ($resultado == 0) {
+        return false;
+    }
+
+    move_uploaded_file($anexo['tmp_name'], "anexos/{anexo['name']}");
+    return true;
+}

@@ -12,13 +12,14 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <title>Taskist</title>
 
-    <link rel="stylesheet" href="css/cssTag.css">
+    <link rel="stylesheet" href="./wes/css/cssTag.css">
     <link rel="stylesheet" href="css/cssClass.css">
     <link rel="stylesheet" href="css/cssId.css">
 
 </head>
 
 <body>
+
     <div class="titulo">
         <h1 class="titulo-texto">Gerenciador de Tarefas</h1>
     </div>

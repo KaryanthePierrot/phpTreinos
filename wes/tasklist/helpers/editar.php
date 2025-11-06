@@ -10,6 +10,7 @@ $errosValidacoes	=	[];
 
 if (temPost()) {
 	$tarefa	=	[
+		'id' => $_POST['id'],
 		'nome' =>    $_POST['nome'],
 		'descricao' => '',
 		'prazo' => '',
@@ -22,8 +23,8 @@ if (temPost()) {
 		$errosValidacoes['nome']    =    'O	nome	da	tarefa	é	obrigatório!';
 	}
 
-	if (array_key_exists('descricao',	$_GET)) {
-		$tarefa['descricao']	=	$_GET['descricao'];
+	if (array_key_exists('descricao',	$_POST)) {
+		$tarefa['descricao']	=	$_POST['descricao'];
 	}
 
 
@@ -46,8 +47,8 @@ if (temPost()) {
 	}
 
 	if (! $hasErrors) {
-		editTask($conexao,	$tarefa);
-		header('Location:	tarefas.php');
+		editTask($conn,	$tarefa);
+		header('Location:	../tasklist.php');
 		die();
 	}
 }

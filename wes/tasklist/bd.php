@@ -21,6 +21,7 @@ if (mysqli_connect_errno()) {
     die();
 }
 
+// Comandos gerais
 function getTasks($conn)
 {
     $sqlGetAll = 'SELECT * FROM tarefas';
@@ -33,10 +34,17 @@ function getTasks($conn)
     return $tarefas;
 }
 
-function    getTask($conexao,    $id)
+function delTudo($conn)
+{
+    $sqlDel = 'DELETE FROM tarefas WHERE 1';
+    mysqli_query($conn, $sqlDel);
+}
+
+// comandos individuais
+function    getTask($conn,    $id)
 {
     $sqlBusca    =    'SELECT	*	FROM	tarefas	WHERE	id	=	'    .    $id;
-    $resultado    =    mysqli_query($conexao,    $sqlBusca);
+    $resultado    =    mysqli_query($conn,    $sqlBusca);
     return    mysqli_fetch_assoc($resultado);
 }
 
@@ -61,7 +69,7 @@ INSERT INTO `tarefas`( `nome`, `descricao`,`prioridade`, `prazo`, concluida)
     mysqli_query($conn, $sqlSet);
 }
 
-function    editTask($conexao,    $tarefa)
+function    editTask($conn,    $tarefa)
 {
     if ($tarefa['prazo']    ==    '') {
         $prazo    =    'NULL';
@@ -77,16 +85,51 @@ prazo	=	{$prazo},
 concluida	=	{$tarefa['concluida']}
 WHERE	id	=	{$tarefa['id']}
 ";
-    mysqli_query($conexao,    $sqlEditar);
+    mysqli_query($conn,    $sqlEditar);
 }
 
-function    delTask($conexao,    $id)
+function    delTask($conn,    $id)
 {
     $sqlRemover    =    "DELETE	FROM	tarefas	WHERE	id	=	{$id}";
-    mysqli_query($conexao,    $sqlRemover);
+    mysqli_query($conn,    $sqlRemover);
 }
 
-function delTudo($conn){
-    $sqlDel = 'DELETE FROM tarefas WHERE 1';
-    mysqli_query($conn, $sqlDel);
+//Arquivos
+function    setAnexo($conn,    $anexo)
+{
+    $sqlGravar    =    "INSERT	INTO	anexos
+        (tarefaId,	nome,	arquivo)
+        VALUES
+        (
+        {$anexo['tarefaId']},
+        '{$anexo['nome']}',
+        '{$anexo['arquivo']}'
+        )
+        ";
+    mysqli_query($conn,    $sqlGravar);
+}
+
+function    getAnexos($conn,    $tarefaId)
+{
+    $sql    =    "SELECT	*	FROM	anexos
+								WHERE	tarefaId	=	{$tarefaId}";
+    $resultado    =    mysqli_query($conn,    $sql);
+    $anexos    =    [];
+    while ($anexo    =    mysqli_fetch_assoc($resultado)) {
+        $anexos[]    =    $anexo;
+    }
+    return $anexos;
+}
+
+function    getAnexo($conn, $id)
+{
+    $sqlBusca    =    'SELECT	*	FROM	anexos	WHERE	id	= ' . $id;
+    $resultado    =    mysqli_query($conn,    $sqlBusca);
+    return    mysqli_fetch_assoc($resultado);
+}
+
+function    delAnexo($conn,    $id)
+{
+    $sqlRemover    =    "DELETE	FROM	anexos	WHERE	id	=	{$id}";
+    mysqli_query($conn,    $sqlRemover);
 }
