@@ -11,52 +11,57 @@ $hasErrors	=	false;
 $errosValidacoes	=	[];
 
 if (temPost()) {
-	$tarefa	=	[
-		'id' => $_POST['id'],
-		'nome' =>    $_POST['nome'],
-		'descricao' => '',
-		'prazo' => '',
-		'prioridade' => $_POST['prioridade'],
-		'concluida' => 0,
-	];
+	// $tarefa	=	[
+	// 	'id' => $_POST['id'],
+	// 	'nome' =>    $_POST['nome'],
+	// 	'descricao' => '',
+	// 	'prazo' => '',
+	// 	'prioridade' => $_POST['prioridade'],
+	// 	'concluida' => 0,
+	// ];
 
-	if (strlen($tarefa['nome'])    ==    0) {
+	if (array_key_exists('nome', $_POST) && strlen($tarefa['nome'])    >    0) {
+		$tarefa->setNome($_POST['nome']);
+	} else {
 		$hasErrors    =    true;
 		$errosValidacoes['nome']    =    'O	nome	da	tarefa	é	obrigatório!';
 	}
 
 	if (array_key_exists('descricao',	$_POST)) {
-		$tarefa['descricao']	=	$_POST['descricao'];
+		$tarefa->setDescricao($_POST['descricao']);
 	}
 
 
 	if (
-		array_key_exists('prazo',    $_POST)
-		&&    strlen($_POST['prazo'])    >    0
+		array_key_exists('prazo',	$_POST)
+		&&	strlen($_POST['prazo'])	>	0
 	) {
 		if (validar_data($_POST['prazo'])) {
-			$tarefa['prazo']    =
-				transDateToDb($_POST['prazo']);
+			$tarefa->setPrazo(
+				transDateToObj($_POST['prazo'])
+			);
 		} else {
-			$hasErrors    =    true;
-			$errosValidacoes['prazo']    =
+			$tem_erros	=	true;
+			$erros_validacao['prazo']	=
 				'O	prazo	não	é	uma	data	válida!';
 		}
 	}
 
-	if (array_key_exists('concluida',	$_GET)) {
-		$tarefa['concluida']	=	$_GET['concluida'];
+	$tarefa->setPrioridade($_POST['prioridade']);
+
+	if (array_key_exists('concluida',	$_POST)) {
+		$tarefa->setConcluida(true);
 	}
 
 	if (! $hasErrors) {
 		editTask($conn,	$tarefa);
-		if (
-			array_key_exists('lembrete',	$_POST)
-			&&	$_POST['lembrete']	==	'1'
-		) {
-			$anexos	=	getAnexos($conn,	$tarefa['id']);
-			// sendMail($tarefa,	$anexos);
-		}
+		// if (
+		// 	array_key_exists('lembrete',	$_POST)
+		// 	&&	$_POST['lembrete']	==	'1'
+		// ) {
+		// 	$anexos	=	getAnexos($conn,	$tarefa['id']);
+		// 	// sendMail($tarefa,	$anexos);
+		// }
 		header('Location:	../tasklist.php');
 		die();
 	}

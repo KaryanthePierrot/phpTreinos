@@ -1,7 +1,7 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
-
+// traduções
 function traduzPrioridade($code)
 {
     $prioridade = '';
@@ -51,6 +51,21 @@ function transDateToView($data)
     return $resultado;
 }
 
+function    transDateToObj($data)
+{
+    if ($data    ==    "") {
+        return "";
+    }
+    $dados    =    explode("/",    $data);
+    if (count($dados)    !=    3) {
+        return $data;
+    }
+    return    DateTime::createFromFormat('d/m/Y',    $data);
+}
+
+
+
+//
 function transConclusao($concluida)
 {
     if ($concluida == '1') {
@@ -102,33 +117,32 @@ function tratarAnexo($anexo)
 }
 
 // // Emails
-// function    sendMail($tarefa,    $anexos = [])
+// function	sendMail(Tarefa	$tarefa)
 // {
-
-//     require '/xampp/htdocs/phpTreinos/wes/tasklist/librarys/PHPMailer/inc.php';
-//     $corpo    =    prepareMail($tarefa,    $anexos);
-//     $email    =    new   PHPMailer();
-//     $email->isSMTP();
-//     $email->Host    =    "smtp.gmail.com";
-//     $email->Port    =    587;
-//     $email->SMTPSecure    =    'tls';
-//     $email->SMTPAuth    =    true;
-//     $email->Username    =    "fandeanimes13@gmail.com";
-//     $email->Password    =    "amoreparaosfracos";
-//     $email->setFrom("fandeanimes13@gmail.com",    "Avisador	de	Tarefas");
-//     $email->addAddress(EMAIL_NOTIFICACAO);
-//     $email->Subject    =    "Aviso	de	tarefa:	{$tarefa['nome']}";
-//     $email->msgHTML($corpo);
-//     foreach ($anexos as $anexo) {
-//         $email->addAttachment("anexos/{$anexo['arquivo']}");
-//     }
-//     $email->send();
-//     		if	(!	$email->send())	{
-// 						saveLog($email->ErrorInfo);		//	salvar	o	erro	em	um	arquivo	de	log
+// 				include "bibliotecas/PHPMailer/inc.php";
+// 				$corpo	=	prepareMail($tarefa);
+// 				$email	=	new	PHPMailer();
+// 				$email->isSMTP();
+// 				$email->Host	=	"smtp.gmail.com";
+// 				$email->Port	=	587;
+// 				$email->SMTPSecure	=	'tls';
+// 				$email->SMTPAuth	=	true;
+// 				$email->Username	=	"seuemail@dominio.com";
+// 				$email->Password	=	"senhasecreta";
+// 				$email->setFrom(
+// 								"seuemail@dominio.com",
+// 								"Avisador	de	Tarefas"
+// 				);
+// 				$email->addAddress(EMAIL_NOTIFICACAO);
+// 				$email->Subject	=	"Aviso	de	tarefa:	{$tarefa->getNome()}";
+// 				$email->msgHTML($corpo);
+// 				foreach	($tafera->getAnexos()	as $anexo)	{
+// 								$email->addAttachment("anexos/{$anexo->getArquivo()}");
 // 				}
+// 				$email->send();
 // }
 
-// function prepareMail($tarefa, $anexos)
+// function prepareMail(Tarefa $tarefa)
 // {
 
 //     ob_start();

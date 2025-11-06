@@ -4,7 +4,7 @@
         method="POST">
 
         <input type="hidden" name="id"
-            value="<?php echo $tarefa['id'];    ?>" />
+            value="<?php echo $tarefa->getId();    ?>" />
 
         <fieldset>
             <legend>Nova Task</legend>
@@ -19,13 +19,13 @@
                     </span>
                 <?php endif;    ?>
                 <input type="text" name="nome"
-                    value="<?php echo    $tarefa['nome'];    ?>" /> </label>
+                    value="<?php echo    $tarefa->getNome();    ?>" /> </label>
 
             <br>
             <label>
                 Descrição (Opicional)
                 <textarea name="descricao">
-                    <?php echo $tarefa['descricao']; ?>
+                    <?php echo $tarefa->getDescricao(); ?>
                 </textarea>
             </label>
 
@@ -39,7 +39,7 @@
                         <?php echo    $errosValidacoes['prazo'];    ?>
                     </span>
                 <?php endif;    ?>
-                <input type="text" name="prazo" value="<?php echo transDateToView($tarefa['prazo']);    ?>" />
+                <input type="text" name="prazo" value="<?php echo transDateToView($tarefa->getPrazo());    ?>" />
             </label>
 
 
@@ -47,17 +47,17 @@
                 <legend>Prioridade:</legend>
                 <label>
                     <input type="radio" name="prioridade" value="1"
-                        <?php echo ($tarefa['prioridade']    ==    1)
+                        <?php echo ($tarefa->getPrioridade()    ==    1)
                             ?    'checked'
                             :    '';
                         ?> /> Baixa
                     <input type="radio" name="prioridade" value="2"
-                        <?php echo ($tarefa['prioridade']    ==    2)
+                        <?php echo ($tarefa->getPrioridade()    ==    2)
                             ?    'checked'
                             :    '';
                         ?> /> Média
                     <input type="radio" name="prioridade" value="3"
-                        <?php echo ($tarefa['prioridade']    ==    3)
+                        <?php echo ($tarefa->getPrioridade()    ==    3)
                             ?    'checked'
                             :    '';
                         ?> /> Alta
@@ -69,7 +69,7 @@
             <label>
                 Tarefa concluída:
                 <input type="checkbox" name="concluida" value="1"
-                    <?php echo ($tarefa['concluida']    ==    1)
+                    <?php echo ($tarefa->getConcluida()    ==    1)
                         ?    'checked'
                         :    '';
                     ?> />
@@ -80,7 +80,8 @@
             </label> -->
 
             <input type="submit" value="Cadastrar" id="form-botao" value="
-                <?php echo ($tarefa['id'] > 0) ? 'Atualizar' : 'Cadastrar';    ?>	" />
+                <?php echo ($tarefa->getId() > 0) ? 'Atualizar' : 'Cadastrar';    ?>	" />
+                
             <button value="Limpar" id="form-botao"> <a href="helpers/limpaLista.php" style="text-decoration:none; color: black;">Limpar</a></button>
 
         </fieldset>
