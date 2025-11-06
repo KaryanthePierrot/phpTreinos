@@ -1,5 +1,7 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 function traduzPrioridade($code)
 {
     $prioridade = '';
@@ -85,7 +87,8 @@ function    validar_data($data)
 
 // anexos
 
-function tratarAnexo($anexo){
+function tratarAnexo($anexo)
+{
     $padrao = '/^.+(\.pdf|\.zip)$/';
 
     $resultado = preg_match($padrao, $anexo['name']);
@@ -94,6 +97,51 @@ function tratarAnexo($anexo){
         return false;
     }
 
-    move_uploaded_file($anexo['tmp_name'], "anexos/{anexo['name']}");
+    move_uploaded_file($anexo['tmp_name'], "anexos/{$anexo['name']}");
     return true;
+}
+
+function    sendMail($tarefa,    $anexos = [])
+{
+
+    require '/xampp/htdocs/phpTreinos/wes/tasklist/librarys/PHPMailer/inc.php';
+    $corpo    =    prepareMail($tarefa,    $anexos);
+    $email    =    new    PHPMailer();
+    $email->isSMTP();
+    $email->Host    =    "smtp.gmail.com";
+    $email->Port    =    587;
+    $email->SMTPSecure    =    'tls';
+    $email->SMTPAuth    =    true;
+    $email->Username    =    "fandeanimes13@gmail.com";
+    $email->Password    =    "amoreparaosfracos";
+    $email->setFrom("fandeanimes13@gmail.com",    "Avisador	de	Tarefas");
+    $email->addAddress(EMAIL_NOTIFICACAO);
+    $email->Subject    =    "Aviso	de	tarefa:	{$tarefa['nome']}";
+    $email->msgHTML($corpo);
+    foreach ($anexos as $anexo) {
+        $email->addAttachment("anexos/{$anexo['arquivo']}");
+    }
+    $email->send();
+    		if	(!	$email->send())	{
+						saveLog($email->ErrorInfo);		//	salvar	o	erro	em	um	arquivo	de	log
+				}
+}
+
+function prepareMail($tarefa, $anexos)
+{
+
+    ob_start();
+    include "../templates/templateMail.php";
+
+    $corpo = ob_get_contents();
+
+    ob_end_clean();
+    return $corpo;
+}
+
+function	saveLog($mensagem)
+{
+				$datahora	=	date("Y-m-d	H:i:s");
+				$mensagem	=	"{$datahora}	{$mensagem}\n";
+				file_put_contents("mensagens.log",	$mensagem,	FILE_APPEND);
 }

@@ -2,16 +2,12 @@
 
 use Tarefas\Models\Tarefa;
 
-$bdServer = '127.0.0.1';
-$bdUser = 'sistematasks';
-$bdPass = 'root';
-$bdBanco = 'tasklist';
 
 $conn = mysqli_connect(
-    $bdServer,
-    $bdUser,
-    $bdPass,
-    $bdBanco
+    BDSERVER,
+    BDUSER,
+    BDPASS,
+    BD
 );
 
 

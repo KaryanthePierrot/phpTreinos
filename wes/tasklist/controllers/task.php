@@ -1,17 +1,29 @@
 <?php
 
-include("bd.php");
-include("helpers/helpers.php");
+include("../config.php");
+include("../bd.php");
+include("../helpers/helpers.php");
 
+$hasErrors = false;
+$errosValidacoes = [];
+
+$tarefaId = isset($_POST["tarefaId"]) && is_numeric($_POST["tarefaId"]) ? $_POST["tarefaId"] : null;
+
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    http_response_code(400);
+    echo "ID da tarefa inválido ou ausente.";
+    die();
+}
+
+$tarefaId = $_GET["id"];
+$tarefa = getTask($conn, $_GET['id']);
+$anexos = getAnexos($conn, $_GET['id']);
 
 if (! is_array($tarefa)) {
     http_response_code(404);
     echo "Tarefa	não	encontrada.";
     die();
 }
-
-$hasErrors = false;
-$errosValidacoes = [];
 
 if (temPost()) {
     //futuro upload de arquivos
@@ -37,12 +49,10 @@ if (temPost()) {
 
     if (!$hasErrors) {
         setAnexo($conn, $anexo);
-        header('Location: http://localhost/phpTreinos/wes/tasklist/task.php?');
+        header("Location: task.php?id={$tarefaId}");
     }
 }
 
-$tarefa = getTask($conn, $_GET['id']);
-$anexos = getAnexos($conn, $_GET['id']);
 
 
-include 'templateTask.php';
+include '../templates/templateTask.php';

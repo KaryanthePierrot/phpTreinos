@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+require "config.php";
 require "bd.php";
 require "helpers/helpers.php";
 
@@ -42,6 +44,11 @@ if (temPost()) {
         }
     }
 
+    if (array_key_exists('prioridade', $_POST) && strlen($_POST['prazo'])    >    0) {
+        $hasErrors    =    true;
+        $errosValidacoes['prioridade']    =
+            'Defina uma prioridade';
+    }
 
     if (array_key_exists('concluida', $_POST)) {
         $tarefa['concluida'] = $_POST['concluida']; // Recebe 'sim'
@@ -50,6 +57,14 @@ if (temPost()) {
 
     if (! $hasErrors) {
         setTask($conn, $tarefa);
+
+        if (
+            array_key_exists('lembrete',    $_POST)
+            &&    $_POST['lembrete']    ==    '1'
+        ) {
+            sendMail($tarefa);
+        }
+
         header('Location:	tasklist.php');
         die();
     }
@@ -69,5 +84,5 @@ $tarefa    =    [
     'concluida' =>    $_POST['concluida'] ?? ''
 ];
 
-
-require "template.php";
+// require 'templateTask.php';
+require "templates/template.php";

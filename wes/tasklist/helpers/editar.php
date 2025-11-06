@@ -1,9 +1,11 @@
 <?php
 session_start();
+include("../config.php");
+
 require "../bd.php";
 require "helpers.php";
 
-$exibir_tabela	=	false;
+$showTable	=	false;
 
 $hasErrors	=	false;
 $errosValidacoes	=	[];
@@ -48,6 +50,13 @@ if (temPost()) {
 
 	if (! $hasErrors) {
 		editTask($conn,	$tarefa);
+		if (
+			array_key_exists('lembrete',	$_POST)
+			&&	$_POST['lembrete']	==	'1'
+		) {
+			$anexos	=	getAnexos($conexao,	$tarefa['id']);
+			sendMail($tarefa,	$anexos);
+		}
 		header('Location:	../tasklist.php');
 		die();
 	}
@@ -66,4 +75,4 @@ $tarefa['prioridade']	=	(array_key_exists('prioridade',	$_POST))
 $tarefa['concluida']	=	(array_key_exists('concluida',	$_POST))	?
 	$_POST['concluida']	:	$tarefa['concluida'];
 
-require "../template.php";
+require "../templates/template.php";

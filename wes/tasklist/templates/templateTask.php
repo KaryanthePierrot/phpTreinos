@@ -5,19 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task</title>
-    <link rel="stylesheet" href="css/cssClass.css">
-    <link rel="stylesheet" href="css/cssId.css">
-    <link rel="stylesheet" href="css/cssTag.css">
+
+    <link rel="stylesheet" href="/phpTreinos/wes/tasklist/css/cssTag.css">
+    <link rel="stylesheet" href="/phpTreinos/wes/tasklist/css/cssClass.css">
+    <link rel="stylesheet" href="/phpTreinos/wes/tasklist/css/cssId.css">
+
 </head>
 
 <body>
     <div class="principal">
         <h1> Tarefa: <?php echo $tarefa['nome']; ?></h1>
-        <p>
-            <a href="tasklist.php">
+        <button>
+            <a href="../tasklist.php">
                 Voltar para a página de tarefas
             </a>
-        </p>
+        </button>
 
         <p>
             <strong>Concluida</strong>
@@ -56,7 +58,7 @@
                                 href="anexos/<?php echo    $anexo['arquivo'];    ?>">
                                 Download
                             </a>
-                            <a href="helpers/delAnexo.php?id=<?php echo    $anexo['id'];    ?>">
+                            <a href="helpers/delAnexo.php?id=<?php echo $anexo['id'] ?>">
                                 Remover
                             </a>
                         </td>
