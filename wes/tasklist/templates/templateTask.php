@@ -58,7 +58,7 @@
                                 href="anexos/<?php echo    $anexo['arquivo'];    ?>">
                                 Download
                             </a>
-                            <a href="helpers/delAnexo.php?id=<?php echo $anexo['id'] ?>">
+                            <a href="../helpers/delAnexo.php?id=<?php echo $anexo['id'] ?>">
                                 Remover
                             </a>
                         </td>
