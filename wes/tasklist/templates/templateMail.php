@@ -1,4 +1,4 @@
-<h1>Tarefa: <?php echo $tarefa['nome'];    ?></h1>
+<!-- <h1>Tarefa: <?php echo $tarefa['nome'];    ?></h1>
 <p>
     <strong>Concluída:</strong>
     <?php echo transConclusao($tarefa['concluida']);    ?>
@@ -21,4 +21,4 @@
 
 <p>
     Tenha um bom dia!
-</p>
+</p> -->

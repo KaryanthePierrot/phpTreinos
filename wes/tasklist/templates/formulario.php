@@ -74,10 +74,10 @@
                         :    '';
                     ?> />
             </label>
-            <label> 
+            <!-- <label> 
                 Lembrete por e-mail:
                 <input type="checkbox" name="lembrete" value="1" />
-            </label>
+            </label> -->
 
             <input type="submit" value="Cadastrar" id="form-botao" value="
                 <?php echo ($tarefa['id'] > 0) ? 'Atualizar' : 'Cadastrar';    ?>	" />

@@ -5,4 +5,4 @@ define("BDUSER",	"sistematasks");
 define("BDPASS",	"root");
 define("BD",	"tasklist");
 //	E-mail	para	notificação
-define("EMAIL_NOTIFICACAO",	"mesquita.westesoficial@gmail.com.br");
+// define("EMAIL_NOTIFICACAO",	"mesquita.westesoficial@gmail.com.br");

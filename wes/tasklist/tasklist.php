@@ -62,7 +62,7 @@ if (temPost()) {
             array_key_exists('lembrete',    $_POST)
             &&    $_POST['lembrete']    ==    '1'
         ) {
-            sendMail($tarefa);
+            // sendMail($tarefa);
         }
 
         header('Location:	tasklist.php');

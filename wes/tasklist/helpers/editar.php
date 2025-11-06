@@ -54,8 +54,8 @@ if (temPost()) {
 			array_key_exists('lembrete',	$_POST)
 			&&	$_POST['lembrete']	==	'1'
 		) {
-			$anexos	=	getAnexos($conexao,	$tarefa['id']);
-			sendMail($tarefa,	$anexos);
+			$anexos	=	getAnexos($conn,	$tarefa['id']);
+			// sendMail($tarefa,	$anexos);
 		}
 		header('Location:	../tasklist.php');
 		die();
