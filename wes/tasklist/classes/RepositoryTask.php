@@ -65,10 +65,10 @@ class RepositorioTarefas
         $this->conn->query($sqlEditar);
     }
 
-    public function    get(int    $tarefa_id    =    0)
+    public function    get(int    $tarefaId    =    0)
     {
-        if ($tarefa_id    >    0) {
-            return $this->getTarefa($tarefa_id);
+        if ($tarefaId    >    0) {
+            return $this->getTarefa($tarefaId);
         } else {
             return $this->getTarefas();
         }
@@ -88,9 +88,9 @@ class RepositorioTarefas
         return $tarefas;
     }
 
-    private function    getTarefa(int    $tarefa_id): Tarefa
+    private function    getTarefa(int    $tarefaId): Tarefa
     {
-        $sqlBusca    =    'SELECT	*	FROM	tarefas	WHERE	id	=	'    .    $tarefa_id;
+        $sqlBusca    =    'SELECT	*	FROM	tarefas	WHERE	id	=	'    .    $tarefaId;
         $resultado    =    $this->conn->query($sqlBusca);
         $tarefa    =    $resultado->fetch_object('Tarefa');
         $tarefa->setAnexos(
@@ -99,16 +99,16 @@ class RepositorioTarefas
         return $tarefa;
     }
 
-    function    delete(int    $tarefa_id)
+    function    delete(int    $tarefaId)
     {
-        $sqldelete    =    "DELETE	FROM	tarefas	WHERE	id	=	{$tarefa_id}";
+        $sqldelete    =    "DELETE	FROM	tarefas	WHERE	id	=	{$tarefaId}";
         $this->conn->query($sqldelete);
     }
 
-    public function    getAnexos(int    $tarefa_id): array
+    public function    getAnexos(int    $tarefaId): array
     {
         $sqlBusca    =
-            "SELECT	*	FROM	anexos	WHERE	tarefa_id	=	{$tarefa_id}";
+            "SELECT	*	FROM	anexos	WHERE	tarefaId	=	{$tarefaId}";
         $resultado    =    $this->conn->query($sqlBusca);
         $anexos    =    array();
         while ($anexo    =    $resultado->fetch_object('Anexo')) {
@@ -127,7 +127,7 @@ class RepositorioTarefas
     public function    saveAnexo(Anexo    $anexo)
     {
         $sqlGravar    =    "INSERT	INTO	anexos
-								(tarefa_id,	nome,	arquivo)
+								(tarefaId,	nome,	arquivo)
 								VALUES
 								(
 												{$anexo->getTarefaId()},
