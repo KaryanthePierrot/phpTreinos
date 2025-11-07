@@ -1,0 +1,19 @@
+{
+    "name": "wes/tasklist",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^7.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Wes\\Tasklist\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "KaryanthePierrot",
+            "email": "mesquita.westesoficial@gmail.com"
+        }
+    ]
+}
