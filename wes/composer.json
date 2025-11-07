@@ -7,7 +7,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Wes\\Tasklist\\": "src/"
+            "Wes\\Tasklist\\": "classes"
         }
     },
     "authors": [
