@@ -6,7 +6,7 @@ require "bd.php";
 require "helpers/helpers.php";
 require 'classes/Tarefa.php';
 require 'classes/Anexo.php';
-require 'classes/RepositoryTask.php';
+require 'classes/RepositoryTarefas.php';
 
 $repositoryTarefas = new RepositorioTarefas($conn);
 

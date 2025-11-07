@@ -14,7 +14,7 @@
 
 <body>
     <div class="principal">
-        <h1> Tarefa: <?php echo $tarefa['nome']; ?></h1>
+        <h1> Tarefa: <?php echo $tarefa->getNome()?></h1>
         <button>
             <a href="../tasklist.php">
                 Voltar para a página de tarefas
@@ -23,42 +23,42 @@
 
         <p>
             <strong>Concluida</strong>
-            <?php echo transConclusao($tarefa['concluida']); ?>
+            <?php echo transConclusao($tarefa->getConcluida()); ?>
         </p>
 
         <p>
             <strong>Descrição</strong>
-            <?php echo nl2br($tarefa['descricao']); ?>
+            <?php echo nl2br($tarefa->getDescricao()); ?>
         </p>
 
         <p>
             <strong>Prazo</strong>
-            <?php echo transDateToView($tarefa['prazo']); ?>
+            <?php echo transDateToView($tarefa->getPrazo()); ?>
         </p>
 
         <p>
             <strong>Prioridade</strong>
-            <?php echo traduzPrioridade($tarefa['prioridade']); ?>
+            <?php echo traduzPrioridade($tarefa->getPrioridade()); ?>
         </p>
 
         <!-- Lista dos anexos vem aqui -->
         <h2>Anexos</h2>
 
-        <?php if (count($anexos)    >    0) :    ?>
+        <?php if (count($tareafa->getAnexos)    >    0) :    ?>
             <table>
                 <tr>
                     <th>Arquivo</th>
                     <th>Opções</th>
                 </tr>
-                <?php foreach ($anexos as $anexo) :    ?>
+                <?php foreach ($tarefa->getAnexos() as $anexo) :    ?>
                     <tr>
-                        <td><?php echo $anexo['nome'];    ?></td>
+                        <td><?php echo $anexo->getNome();    ?></td>
                         <td>
                             <a
-                                href="anexos/<?php echo    $anexo['arquivo'];    ?>">
+                                href="anexos/<?php echo $anexo->getArquivo();    ?>">
                                 Download
                             </a>
-                            <a href="../helpers/delAnexo.php?id=<?php echo $anexo['id'] ?>">
+                            <a href="../helpers/delAnexo.php?id=<?php echo $anexo->getId(); ?>">
                                 Remover
                             </a>
                         </td>
@@ -74,7 +74,7 @@
             <fieldset>
                 <legend>Novo anexo</legend>
 
-                <input type="hidden" name="tarefaId" value="<?php echo $tarefa['id']; ?>" />
+                <input type="hidden" name="tarefaId" value="<?php echo $tarefa->getId()?>" />
 
                 <label>
                     <?php if ($hasErrors && array_key_exists('anexo', $errosValidacoes)): ?>

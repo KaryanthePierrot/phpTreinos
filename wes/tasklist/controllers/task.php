@@ -3,9 +3,16 @@
 include("../config.php");
 include("../bd.php");
 include("../helpers/helpers.php");
+include("../classes/Tarefa.php");
+include("../classes/RepositoryTarefas.php");
+include("../classes/Anexo.php");
+
+$repositoryTarefas = new RepositorioTarefas($conn);
+
+$tarefa = $repositoryTarefas->get($_GET["id"]);
 
 $hasErrors = false;
-$errosValidacoes = [];
+$errosValidacoes = array();
 
 $tarefaId = isset($_POST["tarefaId"]) && is_numeric($_POST["tarefaId"]) ? $_POST["tarefaId"] : null;
 
@@ -19,11 +26,6 @@ $tarefaId = $_GET["id"];
 $tarefa = getTask($conn, $_GET['id']);
 $anexos = getAnexos($conn, $_GET['id']);
 
-if (! is_array($tarefa)) {
-    http_response_code(404);
-    echo "Tarefa	não	encontrada.";
-    die();
-}
 
 if (temPost()) {
     //futuro upload de arquivos
@@ -34,13 +36,13 @@ if (temPost()) {
         $hasErrors = true;
         $errosValidacoes['anexo'] = 'Você deve selecionar um arquivo para anexar';
     } else {
-        if (tratarAnexo($_FILES['anexo'])) {
-            $nome = $_FILES['anexo']['name'];
-            $anexo = [
-                'tarefaId' => $tarefaId,
-                'nome' => substr($nome, 0, -4),
-                'arquivo' => $nome,
-            ];
+        $dadosAnexo = $_FILES['anexo'];
+
+        if (tratarAnexo($dadosAnexo)) {
+            $anexo = new Anexo();
+            $anexo-> setTarefaId($tarefaId);
+            $anexo->setNome($dadosAnexo['name']);
+            $anexo->setArquivo($dadosAnexo['name']);
         } else {
             $hasErrors = true;
             $errosValidacoes['anexo'] = 'Envie anexos nos formatos zip ou pdf';
@@ -48,8 +50,9 @@ if (temPost()) {
     }
 
     if (!$hasErrors) {
-        setAnexo($conn, $anexo);
-        header("Location: task.php?id={$tarefaId}");
+        // setAnexo($conn, $anexo);
+        $repositoryTarefas->saveAnexo($anexo);
+        // header("Location: task.php?id={$tarefaId}");
     }
 }
 
